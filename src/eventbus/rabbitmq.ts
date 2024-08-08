@@ -108,8 +108,10 @@ export class Rabbitmq {
     }
 
     public static async init() {
+       console.log("Rabbitmq init")
         await this.connection()
         await this.setQueue()
         await this.consume()
+        console.log("Rabbitmq init done")
     }
 }

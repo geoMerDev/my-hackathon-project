@@ -3,6 +3,7 @@ import cors from "cors";
 import configEnv from "../config/configEnv";
 import eventReceiveQueueRoutes from "../routes/eventReceiveQueue";
 import { DbSequelize } from "../database/init";
+import {Rabbitmq} from "../eventbus/rabbitmq";
 
 export class Server {
   public readonly app: express.Application;
@@ -26,13 +27,14 @@ export class Server {
 
   public async start(): Promise<void> {
     try {
+      await Rabbitmq.init();
       DbSequelize()
         .then(async () => {
           // Define tus rutas aquí
           this.app.use("/api", (req, res) => {
             res.send("API Routes");
           });
-
+          await Rabbitmq.init();
           // Levantar el servidor HTTP
           this.app.listen(this.port, () => {
             console.log(`Server running on http://localhost:${this.port}`);

@@ -10,7 +10,7 @@ export default {
   RABBIT_USERNAME: process.env.RABBIT_USERNAME || "",
   RABBIT_PASSWORD: process.env.RABBIT_PASSWORD || "",
   RABBIT_PROTOCOL: process.env.RABBIT_PROTOCOL || "",
-  RABBIT_HOSTNAME: process.env.RABBIT_HOSTNAME || "",
+  RABBIT_HOSTNAME: process.env.RABBITMQ_HOST || "",
   RABBIT_PORT: process.env.RABBIT_PORT || 5672,
   RABBIT_VHOST: process.env.RABBIT_VHOST || "",
   RABBIT_QUEUE: process.env.RABBIT_QUEUE || "",

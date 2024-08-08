@@ -35,6 +35,9 @@ services:
       - /home/node/app/node_modules
     networks:
       - app-network
+    depends_on:
+      - db-postgres-service
+      - rabbitmq-service
 
   rabbitmq-service:
     image: rabbitmq:3-management
@@ -46,6 +49,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_VHOST: /
     networks:
       - app-network
 
