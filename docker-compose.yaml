@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  db-postgres-service:
+    image: postgres:16
+    container_name: db-postgres-container
+    restart: always
+    environment:
+      POSTGRES_USER: orders-service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: orders-service
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  backend-service:
+    image: orders-service
+    container_name: orders-container
+    restart: always
+    environment:
+      DB_USERNAME: orders-service
+      DB_PASSWORD: password
+      DB_NAME: orders-service
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/node_modules
+    networks:
+      - app-network
+
+  rabbitmq-service:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-container
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  mysql-data:
+  postgres-data:
