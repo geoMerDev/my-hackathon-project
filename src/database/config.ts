@@ -8,5 +8,5 @@ export const config: Options = {
     logging: false,
     port: AppConfig.DB_PORT,
     database: AppConfig.DB_NAME,
-    dialect: 'mysql'
+    dialect: 'postgres'
 }

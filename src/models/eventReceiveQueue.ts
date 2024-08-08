@@ -7,6 +7,7 @@ interface EventReceiveQueueRow {
   signature: string;
   propertiesData: object;
   data: object;
+  numberOfAttempts: number;
   processedAt: Date;
   createdAt?: Date,
   updatedAt?: Date,
@@ -22,6 +23,7 @@ export class EventReceiveQueue extends Model<
   declare signature: string;
   declare propertiesData: object;
   declare data: object;
+  declare numberOfAttempts: number;
   declare processedAt: Date;
   declare readonly createdAt: Date
   declare readonly updatedAt: Date
@@ -45,22 +47,26 @@ EventReceiveQueue.init(
       allowNull: false,
     },
     propertiesData: {
-      type: DataTypes.JSON, 
+      type: DataTypes.JSON,
       allowNull: false,
     },
     data: {
-      type: DataTypes.JSON, 
+      type: DataTypes.JSON,
+      allowNull: false,
+    },
+    numberOfAttempts: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     processedAt: {
-      type: DataTypes.DATE, 
+      type: DataTypes.DATE,
       allowNull: false,
     },
   },
   {
     sequelize,
     tableName: "event_receive_queue",
-    timestamps: true, 
+    timestamps: true,
     underscored: true,
     paranoid: true,
   }
